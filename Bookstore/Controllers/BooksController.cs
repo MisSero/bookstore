@@ -1,6 +1,7 @@
-﻿using Bookstore.DAL.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Bookstore.DAL.Interfaces;
+using Bookstore.Domain.Interfaces;
+using System.Net;
 
 namespace Bookstore.Controllers
 {
@@ -8,30 +9,30 @@ namespace Bookstore.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly IBookRepository _repository;
-        public BooksController(IBookRepository bookRepository)
+        private readonly IBookService _bookService;
+        public BooksController(IBookService bookService)
         {
-            _repository = bookRepository;
+            _bookService = bookService;
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            var book = _repository.GetById(id).Result;
+            var response = await _bookService.GetById(id);
 
-            if (book == null)
-                return NotFound();
-            return Ok(book);
+            if (response.StatusCode == HttpStatusCode.OK)
+                return Ok(response.Data);
+            return NotFound();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByFilter(string? title, DateTime date)
+        public async Task<IActionResult> GetByFilter(string? title, DateTime? date)
         {
-            var books = _repository.GetByFilter(title, date).Result;
+            var response = await _bookService.GetByFilter(title, date);
 
-            if (books  == null) 
-                return NotFound();
-            return Ok(books);
+            if (response.StatusCode == HttpStatusCode.OK)
+                return Ok(response.Data);
+            return NotFound();
         }
     }
 }

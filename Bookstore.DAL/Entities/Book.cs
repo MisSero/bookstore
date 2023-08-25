@@ -1,4 +1,4 @@
-﻿namespace Bookstore.Domain.Entities;
+﻿namespace Bookstore.DAL.Entities;
 
 public class Book
 {

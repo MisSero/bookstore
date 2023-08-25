@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Bookstore.DAL;
 using Bookstore.DAL.Interfaces;
 using Bookstore.DAL.Repositories;
+using Bookstore.Domain.Interfaces;
+using Bookstore.Domain.Services;
 
 namespace Bookstore
 {
@@ -18,6 +20,8 @@ namespace Bookstore
             });
 
             builder.Services.AddScoped<IBookRepository, BookRepository>();
+            builder.Services.AddScoped<IBookService, BookService>();
+            
 
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();

@@ -1,5 +1,5 @@
 ﻿using Bookstore.DAL.Interfaces;
-using Bookstore.Domain.Entities;
+using Bookstore.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.DAL.Repositories;
