@@ -1,4 +1,5 @@
-using System;
+using Microsoft.EntityFrameworkCore;
+using Bookstore.DAL;
 
 namespace Bookstore
 {
@@ -8,6 +9,12 @@ namespace Bookstore
         {
             var builder = WebApplication.CreateBuilder(args);
        
+            var connectingString = builder.Configuration.GetConnectionString("MSSQL");
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(connectingString);
+            });
+
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
 
