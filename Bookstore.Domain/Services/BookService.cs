@@ -2,6 +2,8 @@
 using Bookstore.DAL.Entities;
 using Bookstore.DAL.Interfaces;
 using Bookstore.Domain.Interfaces;
+using Bookstore.Domain.Mappers;
+using Bookstore.Domain.Models;
 using Bookstore.Domain.Responces;
 
 namespace Bookstore.Domain.Services;
@@ -15,9 +17,9 @@ public class BookService : IBookService
         _bookRepository = bookRepository;
     }
 
-    public async Task<ServiceResponse<List<Book>>> GetByFilter(string? title, DateTime? date)
+    public async Task<ServiceResponse<List<BookModel>>> GetByFilter(string? title, DateTime? date)
     {
-        ServiceResponse<List<Book>> response = new();
+        ServiceResponse<List<BookModel>> response = new();
 
         var filteredBooks = _bookRepository.GetByFilter(title, date).Result;
 
@@ -25,16 +27,23 @@ public class BookService : IBookService
             response.StatusCode = HttpStatusCode.NotFound;
         else
         {
-            response.Data = filteredBooks;
+            List<BookModel> books = new ();
+
+            foreach (var book in filteredBooks)
+            {
+                books.Add(BookMapper.EntityToModel(book));
+            }
+
+            response.Data = books;
             response.StatusCode = HttpStatusCode.OK;
         }
 
         return response;
     }
 
-    public async Task<ServiceResponse<Book>> GetById(int id)
+    public async Task<ServiceResponse<BookModel>> GetById(int id)
     {
-        ServiceResponse<Book> response = new();
+        ServiceResponse<BookModel> response = new();
 
         Book book = await _bookRepository.GetById(id);
 
@@ -42,7 +51,7 @@ public class BookService : IBookService
             response.StatusCode = HttpStatusCode.NotFound;
         else
         {
-            response.Data = book;
+            response.Data = BookMapper.EntityToModel(book);
             response.StatusCode = HttpStatusCode.OK;
         }
 
