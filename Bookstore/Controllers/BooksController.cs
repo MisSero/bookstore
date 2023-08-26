@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Bookstore.DAL.Interfaces;
 using Bookstore.Domain.Interfaces;
 using System.Net;
 
@@ -32,7 +31,7 @@ namespace Bookstore.Controllers
 
             if (response.StatusCode == HttpStatusCode.OK)
                 return Ok(response.Data);
-            return NotFound();
+            return StatusCode(500, "Internal server error");
         }
     }
 }

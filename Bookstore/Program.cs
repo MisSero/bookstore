@@ -20,7 +20,10 @@ namespace Bookstore
             });
 
             builder.Services.AddScoped<IBookRepository, BookRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
             builder.Services.AddScoped<IBookService, BookService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
             
 
             builder.Services.AddControllers();
