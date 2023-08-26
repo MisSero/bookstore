@@ -24,15 +24,13 @@ public class BookService : IBookService
         var filteredBooks = _bookRepository.GetByFilter(title, date).Result;
 
         if (filteredBooks == null)
-            response.StatusCode = HttpStatusCode.NotFound;
+            response.StatusCode = HttpStatusCode.InternalServerError;
         else
         {
             List<BookModel> books = new ();
 
             foreach (var book in filteredBooks)
-            {
                 books.Add(BookMapper.EntityToModel(book));
-            }
 
             response.Data = books;
             response.StatusCode = HttpStatusCode.OK;
