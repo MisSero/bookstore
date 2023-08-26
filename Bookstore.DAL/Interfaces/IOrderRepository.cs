@@ -4,7 +4,7 @@ namespace Bookstore.DAL.Interfaces;
 
 public interface IOrderRepository
 {
-    public Task<bool> Save();
+    public Task<bool> Save(int[] bookIds);
 
-    public Task<List<Order>> GetByFilter(int number, DateTime? date);
+    public Task<List<Order>> GetByFilter(int id, DateTime? date);
 }
