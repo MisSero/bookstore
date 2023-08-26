@@ -43,7 +43,7 @@ public class BookService : IBookService
     {
         ServiceResponse<BookModel> response = new();
 
-        Book book = await _bookRepository.GetById(id);
+        Book? book = await _bookRepository.GetById(id);
 
         if (book == null)
             response.StatusCode = HttpStatusCode.NotFound;

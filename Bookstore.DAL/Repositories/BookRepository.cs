@@ -26,7 +26,7 @@ public class BookRepository : IBookRepository
         return await filteredBooks.ToListAsync();
     }
 
-    public async Task<Book> GetById(int id)
+    public async Task<Book?> GetById(int id)
     {
         return await _db.Books.FirstOrDefaultAsync(b => b.Id == id);
     }
