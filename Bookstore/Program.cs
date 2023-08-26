@@ -4,6 +4,7 @@ using Bookstore.DAL.Interfaces;
 using Bookstore.DAL.Repositories;
 using Bookstore.Domain.Interfaces;
 using Bookstore.Domain.Services;
+using Bookstore.Middleware;
 
 namespace Bookstore
 {
@@ -24,7 +25,6 @@ namespace Bookstore
 
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
-            
 
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
@@ -39,6 +39,8 @@ namespace Bookstore
 
             app.MapControllers();
             app.UseRouting();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.Run();
         }
