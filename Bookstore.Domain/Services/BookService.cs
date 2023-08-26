@@ -21,7 +21,7 @@ public class BookService : IBookService
     {
         ServiceResponse<List<BookModel>> response = new();
 
-        var filteredBooks = _bookRepository.GetByFilter(title, date).Result;
+        var filteredBooks = await _bookRepository.GetByFilter(title, date);
 
         if (filteredBooks == null)
             response.StatusCode = HttpStatusCode.InternalServerError;
